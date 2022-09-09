@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    bool checkLabel(QString);
+
 
 private slots:
     void on_pushButton_clicked();
@@ -27,5 +27,10 @@ private:
     QLabel* labels[4][4];
     Ui::MainWindow *ui;
     int count;
+    int currentY;
+    int currentX;
+
+    bool checkLabel(QString);
+    bool checkCell(int, int);
 };
 #endif // MAINWINDOW_H
