@@ -36,8 +36,10 @@ private:
     int currentX;
     int nextY;
     int nextX;
+    QString tmpText;
 
-
+    struct Cell{int y; int x;};
+    QVector<Cell> tmpCells;
 
     bool checkCell(int, int);
     bool voidCheckCell(int, int);

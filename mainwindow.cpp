@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     labels[currentY][currentX]->setStyleSheet("QLabel {background-color: green;}");
     labels[currentY][currentX]->setText(QString::number(++count));
+    ui->textEdit->setText("[" + QString::number(currentY + 1) + "][" + QString::number(currentX + 1) + "] = " + QString::number(count));
 
     checkList[currentY][currentX] = false;
 
@@ -84,49 +85,68 @@ void MainWindow::initCheckList()
 
 void MainWindow::on_pushButton_clicked()
 {
-    /*
-    for(int i = 0; i < 4; ++i)
+    for(int i = 0; i < 15; ++i)
     {
-        for(int j = 0; j < 4; ++j)
-        {
-            qDebug() << "[" << i << "][" << j << "]" << checkList[i][j];
-        }
-    }
-    */
-
-    for(int i = 0; i < 1; ++i)
-    //while(count < 2)
-    {
-        //int y = QRandomGenerator::global()->bounded(0,4);
-        //qDebug() << y << " " << x;
         if(checkCell(currentY - 1, currentX))
         {
             if(voidCheckCell(currentY - 1, currentX))
             {
-               qDebug() << "Up step";
+               Cell tempCell;
+               tempCell.y = currentY - 1;
+               tempCell.x = currentX;
+               tmpCells.push_back(tempCell);
             }
         }
         if(checkCell(currentY + 1, currentX))
         {
             if(voidCheckCell(currentY + 1, currentX))
             {
-               qDebug() << "Down step";
+               Cell tempCell;
+               tempCell.y = currentY + 1;
+               tempCell.x = currentX;
+               tmpCells.push_back(tempCell);
             }
         }
         if(checkCell(currentY, currentX - 1))
         {
             if(voidCheckCell(currentY, currentX - 1))
             {
-               qDebug() << "Left step";
+               Cell tempCell;
+               tempCell.y = currentY;
+               tempCell.x = currentX - 1;
+               tmpCells.push_back(tempCell);
             }
         }
         if(checkCell(currentY, currentX + 1))
         {
             if(voidCheckCell(currentY, currentX + 1))
             {
-               qDebug() << "Right step";
+               Cell tempCell;
+               tempCell.y = currentY;
+               tempCell.x = currentX + 1;
+               tmpCells.push_back(tempCell);
             }
         }
+    int rndCellStep = 0;
+    if(tmpCells.size() > 0)
+    {
+       rndCellStep = QRandomGenerator::global()->bounded(0,tmpCells.size());
+       labels[tmpCells[rndCellStep].y][tmpCells[rndCellStep].x]->setStyleSheet("QLabel {background-color: green;}");
+       labels[tmpCells[rndCellStep].y][tmpCells[rndCellStep].x]->setText(QString::number(++count));
+
+       tmpText = ui->textEdit->toPlainText();
+       ui->textEdit->setText(tmpText + "\n" + "[" + QString::number(tmpCells[rndCellStep].y + 1) + "][" + QString::number(tmpCells[rndCellStep].x + 1) + "] = " + QString::number(count));
+
+       checkList[tmpCells[rndCellStep].y][tmpCells[rndCellStep].x] = false;
+       currentY = tmpCells[rndCellStep].y;
+       currentX = tmpCells[rndCellStep].x;
+       tmpCells.clear();
+    }else
+    {
+        ui->textEdit->setText(tmpText + "\n" + "Not free cells");
+        break;
+    }
+
 
     }
 
@@ -147,8 +167,17 @@ void MainWindow::on_pushButton_2_clicked()
         }
 
     }
+    initCheckList();
 
-    labels[0][0]->setStyleSheet("QLabel {background-color: green;}");
-    labels[0][0]->setText(QString::number(++count));
+    //currentY = 0;
+    //currentX = 0;
+    currentY = QRandomGenerator::global()->bounded(0,4);
+    currentX = QRandomGenerator::global()->bounded(0,4);
+    checkList[currentY][currentX] = false;
+    labels[currentY][currentX]->setStyleSheet("QLabel {background-color: green;}");
+    labels[currentY][currentX]->setText(QString::number(++count));
+    tmpCells.clear();
+    ui->textEdit->clear();
+    ui->textEdit->setText("[" + QString::number(currentY + 1) + "][" + QString::number(currentX + 1) + "] = " + QString::number(count));
 }
 
