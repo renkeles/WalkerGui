@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>200</width>
-    <height>230</height>
+    <height>260</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,20 +19,20 @@
   <property name="minimumSize">
    <size>
     <width>200</width>
-    <height>230</height>
+    <height>260</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>200</width>
-    <height>230</height>
+    <height>260</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Walker</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="20,20,20,20,0">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="20,20,20,20,0,0">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
@@ -279,6 +279,13 @@
        </widget>
       </item>
      </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="text">
+       <string>Сброс</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

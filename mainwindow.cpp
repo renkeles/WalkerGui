@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "walker.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -26,6 +25,118 @@ MainWindow::MainWindow(QWidget *parent)
     labels[3][3] = ui->label_16;
 
     count = 0;
+    initCheckList();
+    currentY = 0;
+    currentX = 0;
+
+
+    for(int i = 0; i < 4; ++i)
+    {
+        for(int j = 0; j < 4; ++j)
+        {
+            labels[i][j]->setText(QString::number(count));
+            labels[i][j]->setStyleSheet("QLabel {background-color: yellow;}");
+        }
+
+    }
+
+    labels[currentY][currentX]->setStyleSheet("QLabel {background-color: green;}");
+    labels[currentY][currentX]->setText(QString::number(++count));
+
+    checkList[currentY][currentX] = false;
+
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+bool MainWindow::checkCell(int y, int x)
+{
+    if((y >= 0 && y < 4) && (x >=0 && x < 4))
+    {
+        return true;
+    }
+    return false;
+}
+
+bool MainWindow::voidCheckCell(int y, int x)
+{
+    if(checkList[y][x])
+    {
+        return true;
+    }
+    return false;
+}
+
+void MainWindow::initCheckList()
+{
+    for(int i = 0; i < 4; ++i)
+    {
+        for(int j = 0; j < 4; ++j)
+        {
+            checkList[i][j] = true;
+        }
+    }
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    /*
+    for(int i = 0; i < 4; ++i)
+    {
+        for(int j = 0; j < 4; ++j)
+        {
+            qDebug() << "[" << i << "][" << j << "]" << checkList[i][j];
+        }
+    }
+    */
+
+    for(int i = 0; i < 1; ++i)
+    //while(count < 2)
+    {
+        //int y = QRandomGenerator::global()->bounded(0,4);
+        //qDebug() << y << " " << x;
+        if(checkCell(currentY - 1, currentX))
+        {
+            if(voidCheckCell(currentY - 1, currentX))
+            {
+               qDebug() << "Up step";
+            }
+        }
+        if(checkCell(currentY + 1, currentX))
+        {
+            if(voidCheckCell(currentY + 1, currentX))
+            {
+               qDebug() << "Down step";
+            }
+        }
+        if(checkCell(currentY, currentX - 1))
+        {
+            if(voidCheckCell(currentY, currentX - 1))
+            {
+               qDebug() << "Left step";
+            }
+        }
+        if(checkCell(currentY, currentX + 1))
+        {
+            if(voidCheckCell(currentY, currentX + 1))
+            {
+               qDebug() << "Right step";
+            }
+        }
+
+    }
+
+
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    count = 0;
 
     for(int i = 0; i < 4; ++i)
     {
@@ -39,46 +150,5 @@ MainWindow::MainWindow(QWidget *parent)
 
     labels[0][0]->setStyleSheet("QLabel {background-color: green;}");
     labels[0][0]->setText(QString::number(++count));
-    currentY = 0;
-    currentX = 0;
-
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
-bool MainWindow::checkLabel(QString text)
-{
-    if(text == "0")
-    {
-        return true;
-    }
-
-    return false;
-}
-
-bool MainWindow::checkCell(int y, int x)
-{
-    if((y >= 0 && y < 4) && (x >=0 && x < 4))
-    {
-
-    }
-    return false;
-}
-
-
-void MainWindow::on_pushButton_clicked()
-{
-    int i = qrand() % 4;
-    int j = qrand() % 4;
-    qDebug() << i << " " << j;
-    if(checkLabel(labels[i][j]->text()))
-    {
-        labels[i][j]->setStyleSheet("QLabel {background-color: green;}");
-        labels[i][j]->setText(QString::number(++count));
-    }
-
 }
 

@@ -6,6 +6,7 @@
 #include <QVector>
 #include <QLabel>
 #include <QDebug>
+#include <QRandomGenerator>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,14 +24,24 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     QLabel* labels[4][4];
+    bool checkList[4][4];
+
     Ui::MainWindow *ui;
     int count;
     int currentY;
     int currentX;
+    int nextY;
+    int nextX;
 
-    bool checkLabel(QString);
+
+
     bool checkCell(int, int);
+    bool voidCheckCell(int, int);
+
+    void initCheckList();
 };
 #endif // MAINWINDOW_H
